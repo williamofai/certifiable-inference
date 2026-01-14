@@ -1,0 +1,52 @@
+# Pre-commit configuration for Certifiable Inference
+# Install: pip install pre-commit
+# Setup: pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # Standard pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-case-conflict
+      - id: mixed-line-ending
+
+  # Local hooks for C code quality
+  - repo: local
+    hooks:
+      # Static analysis with cppcheck
+      - id: cppcheck
+        name: cppcheck static analysis
+        entry: cppcheck
+        args:
+          - --error-exitcode=1
+          - --enable=all
+          - --suppress=missingIncludeSystem
+          - --suppress=unmatchedSuppression
+          - --suppress=unusedFunction
+          - --std=c99
+          - -Iinclude
+          - --quiet
+        language: system
+        files: \.(c|h)$
+
+      # Check for required copyright headers
+      - id: check-copyright
+        name: check copyright headers
+        entry: bash -c 'for file in "$@"; do if ! grep -q "Copyright.*2026.*Murray Family Innovation Trust" "$file"; then echo "Missing copyright in $file"; exit 1; fi; done' --
+        language: system
+        files: \.(c|h)$
+
+      # Check for traceability tags in .c and .h files
+      - id: check-traceability
+        name: check traceability tags
+        entry: bash -c 'for file in "$@"; do if ! grep -q "@traceability" "$file"; then echo "Missing @traceability in $file"; exit 1; fi; done' --
+        language: system
+        files: \.(c|h)$
