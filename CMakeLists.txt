@@ -18,6 +18,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 add_library(certifiable_inference
     src/containers/deterministic_hash.c
     src/core/fixed_point.c
+    src/core/matrix.c
 )
 
 # Test executables
@@ -36,11 +37,17 @@ add_executable(test_fixed_point
 )
 target_link_libraries(test_fixed_point certifiable_inference m)
 
+add_executable(test_matrix_reproducibility
+    tests/unit/test_matrix_reproducibility.c
+)
+target_link_libraries(test_matrix_reproducibility certifiable_inference m)
+
 # Enable testing
 enable_testing()
 add_test(NAME test_hash_basic COMMAND test_hash_basic)
 add_test(NAME test_hash_consistency COMMAND test_hash_consistency)
 add_test(NAME test_fixed_point COMMAND test_fixed_point)
+add_test(NAME test_matrix_reproducibility COMMAND test_matrix_reproducibility)
 
 # Static Analysis Targets
 find_program(CPPCHECK cppcheck)
@@ -84,7 +91,7 @@ endif()
 add_custom_target(
     test-all
     COMMAND ${CMAKE_CTEST_COMMAND} --verbose
-    DEPENDS test_hash_basic test_hash_consistency test_fixed_point
+    DEPENDS test_hash_basic test_hash_consistency test_fixed_point test_matrix_reproducibility
     COMMENT "Running all tests"
 )
 
