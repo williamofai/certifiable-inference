@@ -1,6 +1,7 @@
 # certifiable-inference
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/williamofai/certifiable-inference)
+[![Tests](https://img.shields.io/badge/tests-64%20passing-brightgreen)](https://github.com/williamofai/certifiable-inference)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 [![MISRA Compliance](https://img.shields.io/badge/MISRA--C-2012-blue)](docs/misra-compliance.md)
 
