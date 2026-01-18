@@ -24,6 +24,7 @@
 #include "matrix.h"
 #include "convolution.h"
 #include "fixed_point.h"
+#include <inttypes.h>
 #include <stdio.h>
 #include <time.h>
 #include <stdint.h>
@@ -118,16 +119,16 @@ static void print_timing_analysis(const uint64_t* times, int count, const char* 
     /* Print results */
     printf("\n%s Timing Analysis (%d iterations):\n", operation_name, count);
     printf("═══════════════════════════════════════════════\n");
-    printf("  Mean Latency:       %6lu ns\n", mean_time);
-    printf("  Median (P50):       %6lu ns\n", p50);
-    printf("  Min Latency:        %6lu ns\n", min_time);
-    printf("  95th Percentile:    %6lu ns\n", p95);
-    printf("  99th Percentile:    %6lu ns\n", p99);
-    printf("  Max Latency:        %6lu ns (outlier)\n", max_time);
+    printf("  Mean Latency:       %6" PRIu64 " ns\n", mean_time);
+    printf("  Median (P50):       %6" PRIu64 " ns\n", p50);
+    printf("  Min Latency:        %6" PRIu64 " ns\n", min_time);
+    printf("  95th Percentile:    %6" PRIu64 " ns\n", p95);
+    printf("  99th Percentile:    %6" PRIu64 " ns\n", p99);
+    printf("  Max Latency:        %6" PRIu64 " ns (outlier)\n", max_time);
     printf("\n");
-    printf("  Total Jitter:       %6lu ns (%.2f%% - includes OS interference)\n",
+    printf("  Total Jitter:       %6" PRIu64 " ns (%.2f%% - includes OS interference)\n",
            jitter, jitter_percent);
-    printf("  P99 Jitter:         %6lu ns (%.2f%% - algorithmic variance)\n",
+    printf("  P99 Jitter:         %6" PRIu64 " ns (%.2f%% - algorithmic variance)\n",
            jitter_p99, jitter_p99_percent);
     printf("  Std Deviation:      %6.2f ns\n", stddev);
     printf("  Min/P99 Ratio:      %.4f (algorithmic consistency)\n",
