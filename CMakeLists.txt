@@ -31,42 +31,6 @@ add_library(certifiable_inference
     src/core/pooling.c
 )
 
-# Unit test executables
-add_executable(test_hash_basic
-    tests/unit/test_hash_basic.c
-)
-target_link_libraries(test_hash_basic certifiable_inference)
-
-add_executable(test_hash_consistency
-    tests/unit/test_hash_consistency.c
-)
-target_link_libraries(test_hash_consistency certifiable_inference)
-
-add_executable(test_fixed_point
-    tests/unit/test_fixed_point.c
-)
-target_link_libraries(test_fixed_point certifiable_inference m)
-
-add_executable(test_matrix_reproducibility
-    tests/unit/test_matrix_reproducibility.c
-)
-target_link_libraries(test_matrix_reproducibility certifiable_inference m)
-
-add_executable(test_activations
-    tests/unit/test_activations.c
-)
-target_link_libraries(test_activations certifiable_inference m)
-
-add_executable(test_convolution
-    tests/unit/test_convolution.c
-)
-target_link_libraries(test_convolution certifiable_inference m)
-
-add_executable(test_pooling
-    tests/unit/test_pooling.c
-)
-target_link_libraries(test_pooling certifiable_inference m)
-
 # Example programs
 add_executable(xor_gate
     examples/xor_gate.c
@@ -86,13 +50,28 @@ target_link_libraries(timing_benchmark certifiable_inference m)
 
 # Enable testing
 enable_testing()
-add_test(NAME test_hash_basic COMMAND test_hash_basic)
-add_test(NAME test_hash_consistency COMMAND test_hash_consistency)
-add_test(NAME test_fixed_point COMMAND test_fixed_point)
-add_test(NAME test_matrix_reproducibility COMMAND test_matrix_reproducibility)
-add_test(NAME test_activations COMMAND test_activations)
-add_test(NAME test_convolution COMMAND test_convolution)
-add_test(NAME test_pooling COMMAND test_pooling)
+
+function(ci_add_unit_test name)
+  add_executable(${name} ${ARGN})
+
+  # -UNDEBUG undefines NDEBUG even if it came from -DNDEBUG in Release.
+  target_compile_options(${name} PRIVATE -UNDEBUG)
+
+  # Common libs for all unit tests
+  target_link_libraries(${name} PRIVATE certifiable_inference m)
+
+  # Register with CTest
+  add_test(NAME ${name} COMMAND ${name})
+endfunction()
+
+# Unit test executables
+ci_add_unit_test(test_hash_basic              tests/unit/test_hash_basic.c)
+ci_add_unit_test(test_hash_consistency        tests/unit/test_hash_consistency.c)
+ci_add_unit_test(test_fixed_point             tests/unit/test_fixed_point.c)
+ci_add_unit_test(test_matrix_reproducibility  tests/unit/test_matrix_reproducibility.c)
+ci_add_unit_test(test_activations             tests/unit/test_activations.c)
+ci_add_unit_test(test_convolution             tests/unit/test_convolution.c)
+ci_add_unit_test(test_pooling                 tests/unit/test_pooling.c)
 
 # Static Analysis Targets
 find_program(CPPCHECK cppcheck)
