@@ -206,6 +206,28 @@ Documentation includes Requirements Traceability Matrix (RTM), Software Requirem
 
 For compliance packages and hardware porting assistance, contact below.
 
+## Deep Dives
+
+Want to understand the engineering principles behind certifiable-inference?
+
+**Fixed-Point & Determinism:**
+- [Fixed-Point Neural Networks: The Math Behind Q16.16](https://speytech.com/insights/fixed-point-neural-networks/)
+- [Bit-Perfect Reproducibility: Why It Matters and How to Prove It](https://speytech.com/insights/bit-perfect-reproducibility/)
+- [From Proofs to Code: Mathematical Transcription in C](https://speytech.com/insights/mathematical-proofs-to-code/)
+
+**Real-Time & Safety:**
+- [WCET for Neural Network Inference](https://speytech.com/ai-architecture/wcet-neural-network-inference/)
+- [The Real Cost of Dynamic Memory in Safety-Critical Systems](https://speytech.com/insights/dynamic-memory-safety-critical/)
+
+**Certification Standards:**
+- [DO-178C Level A Certification: How Deterministic Execution Can Streamline Certification Effort](https://speytech.com/insights/do178c-certification/)
+- [IEC 62304 Class C: What Medical Device Software Actually Requires](https://speytech.com/insights/iec-62304-class-c/)
+- [ISO 26262 and ASIL-D: The Role of Determinism](https://speytech.com/insights/iso-26262-asil-d-determinism/)
+
+**Production ML Architecture:**
+- [A Complete Deterministic ML Pipeline for Safety-Critical Systems](https://speytech.com/ai-architecture/deterministic-ml-pipeline/)
+- [TFLite and DO-178C: The Certification Gap](https://speytech.com/ai-architecture/tflite-do178c-challenges/)
+
 ## Contributing
 
 We welcome contributions from systems engineers working in safety-critical domains. See [CONTRIBUTING.md](CONTRIBUTING.md).
